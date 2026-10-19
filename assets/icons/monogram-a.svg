@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" width="100%" height="100%">
+  <!-- Antique Gold Circle Seal -->
+  <circle cx="50" cy="50" r="44" fill="none" stroke="#A47B36" stroke-width="2.5"/>
+  <circle cx="50" cy="50" r="40" fill="none" stroke="#A47B36" stroke-width="1" stroke-dasharray="3,3"/>
+  <!-- Classic Serif Monogram 'A' -->
+  <text x="50" y="65" font-family="'Cinzel', Georgia, serif" font-size="44" font-weight="700" fill="#181614" text-anchor="middle" letter-spacing="1">A</text>
+  <!-- Small Star Ornaments -->
+  <circle cx="50" cy="18" r="1.5" fill="#A47B36"/>
+  <circle cx="50" cy="82" r="1.5" fill="#A47B36"/>
+</svg>
+

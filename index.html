@@ -1,0 +1,992 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AGUIAR — Haute Alfaiataria & Bespoke Atelier</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600;700;800;900&family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400;1,600&family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;0,800;0,900;1,400;1,600&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+  <!-- FAST VIEW SWITCHER BAR -->
+  <div class="view-switcher-bar">
+    <span>Aguiar Bespoke Tailoring:</span>
+    <button class="view-btn active" onclick="switchMainView('home')">Home Page</button>
+    <button class="view-btn" onclick="toggleCartDrawer(true)">Sacola / Carrinho (Drawer)</button>
+    <button class="view-btn" onclick="switchMainView('checkout')">Área de Pagamento (PIX)</button>
+    <button class="view-btn" onclick="toggleProfileDrawer(true)">Menu Perfil (Lounge)</button>
+    <button class="view-btn" onclick="openAuthModal('signin')">Sign In</button>
+    <button class="view-btn" onclick="openAuthModal('signup')">Sign Up</button>
+    <button class="theme-switch-btn" id="themeSwitchBtn" onclick="toggleTheme()" title="Alternar tema Claro / Escuro">
+      <span id="themeIcon" class="theme-icon-wrap"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"></circle><path d="M12 3a9 9 0 0 1 0 18z" fill="currentColor"></path></svg></span>
+      <span id="themeLabel">Tema: Sistema</span>
+    </button>
+  </div>
+
+  <!-- SITE HEADER -->
+  <header class="site-header">
+    <div class="brand-logo-wrap" onclick="switchMainView('home')">
+      <div class="brand-pills">
+        <div class="pill pill-gold"></div>
+        <div class="pill pill-ink"></div>
+      </div>
+      <div class="brand-texts">
+        <h1>AGUIAR</h1>
+        <span>BESPOKE TAILORING — EST. 1928</span>
+      </div>
+    </div>
+
+    <nav class="desktop-nav">
+      <ul>
+        <li><a href="#" class="active" onclick="switchMainView('home')">Coleções</a></li>
+        <li><a href="#acervo" onclick="switchMainView('home')">Ternos Sob Medida</a></li>
+        <li><a href="#acervo" onclick="switchMainView('home')">Camisas Sociais</a></li>
+        <li><a href="#acervo" onclick="switchMainView('home')">Calças de Alfaiataria</a></li>
+        <li><a href="#atelier" onclick="switchMainView('home')">O Atelier</a></li>
+      </ul>
+    </nav>
+
+    <div class="header-actions">
+      <!-- THEME TOGGLE HEADER BUTTON -->
+      <button class="btn-theme-header" onclick="toggleTheme()" title="Alternar Modo Claro / Escuro">
+        <span id="themeHeaderIcon" class="theme-icon-wrap"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"></circle><path d="M12 3a9 9 0 0 1 0 18z" fill="currentColor"></path></svg></span>
+      </button>
+
+      <button class="btn-cart-trigger" onclick="toggleCartDrawer(true)" title="Abrir Sacola">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/>
+          <line x1="3" y1="6" x2="21" y2="6"/>
+          <path d="M16 10a4 4 0 0 1-8 0"/>
+        </svg>
+        <span>SACOLA</span>
+        <div class="cart-badge" id="headerCartBadge" style="display: none;">0</div>
+      </button>
+
+      <button class="btn-lounge-vip" onclick="handleLoungeHeaderClick()">
+        <div class="lounge-monogram">A</div>
+        <span>LOUNGE PRIVÉ</span>
+      </button>
+
+      <button class="mobile-menu-toggle" onclick="toggleCartDrawer(true)">☰</button>
+    </div>
+  </header>
+
+  <!-- HOME PAGE -->
+  <main id="view-home" class="view-container active-view">
+    
+    <section class="hero-section">
+      <div>
+        <div class="hero-tag">
+          <div class="dot"></div>
+          <span>HAUTE ALFAIATARIA • EDIÇÃO VINTAGE 2026</span>
+        </div>
+        <div class="hero-headline">
+          THE ESSENCE OF
+          <span class="serif-muted">PERFECT FIT.</span>
+        </div>
+        <p class="hero-description">
+          Peças talhadas à mão com a precisão secular de 38 medidas anatômicas. Do toque sedoso das camisas de algodão egípcio ao caimento impecável das calças gurkha e trajes em full canvas estruturado sem colagem.
+        </p>
+
+        <div class="hero-ctas">
+          <button class="btn-ink-primary" onclick="openAuthModal('signup')">
+            Agendar Prova Privada →
+          </button>
+          <a href="#acervo-produtos" class="btn-outline-tailor" onclick="scrollToProducts(event)">
+            Explorar Acervo Sob Medida
+          </a>
+        </div>
+
+        <div class="hero-perks-row">
+          <div><span>✓</span> Modelagem 3D &amp; Provas em São Paulo e Milão</div>
+          <div><span>✓</span> Tecidos Raros Loro Piana, Thomas Mason &amp; Scabal</div>
+        </div>
+      </div>
+
+      <div class="hero-art-frame" id="heroCarouselFrame">
+        <!-- TOP PROGRESS BARS (STORIES STYLE) -->
+        <div class="carousel-top-bar" aria-label="Indicador de slides">
+          <div class="carousel-progress-track" onclick="setHeroSlide(0)" title="Costume Full Canvas">
+            <div class="carousel-progress-fill" id="carouselProgress0"></div>
+          </div>
+          <div class="carousel-progress-track" onclick="setHeroSlide(1)" title="Mestre Alfaiate">
+            <div class="carousel-progress-fill" id="carouselProgress1"></div>
+          </div>
+          <div class="carousel-progress-track" onclick="setHeroSlide(2)" title="Calça Gurkha">
+            <div class="carousel-progress-fill" id="carouselProgress2"></div>
+          </div>
+          <div class="carousel-progress-track" onclick="setHeroSlide(3)" title="Acervo de Tecidos">
+            <div class="carousel-progress-fill" id="carouselProgress3"></div>
+          </div>
+        </div>
+
+        <!-- CAROUSEL SLIDES VIEWPORT -->
+        <div class="hero-carousel-viewport">
+          <!-- Slide 1 -->
+          <div class="hero-carousel-slide active" data-index="0" data-spec-left="SPEC: FULL CANVAS CRAFTSMANSHIP" data-spec-right="SUPER 180s WOOL &amp; CASHMERE">
+            <img src="assets/images/hero/slide-1-suit.jpg" alt="Costume Aguiar Privé Full Canvas" class="carousel-slide-img">
+            <div class="carousel-slide-overlay">
+              <span class="carousel-slide-badge">ALTA COSTURA PRIVÉ</span>
+              <h3 class="carousel-slide-title">Costume Bespoke Full Canvas</h3>
+              <p class="carousel-slide-desc">Entretelamento flutuante em crina de cavalo &amp; lã Scabal Super 180s</p>
+            </div>
+          </div>
+
+          <!-- Slide 2 -->
+          <div class="hero-carousel-slide" data-index="1" data-spec-left="SPEC: MASTER TAILOR HANDCRAFT" data-spec-right="38 ANATOMICAL MEASURES">
+            <img src="assets/images/hero/slide-2-tailor.jpg" alt="Mestre Alfaiate Aguiar" class="carousel-slide-img">
+            <div class="carousel-slide-overlay">
+              <span class="carousel-slide-badge">PRECISÃO ARTESANAL</span>
+              <h3 class="carousel-slide-title">Mestre Alfaiate &amp; Corte 3D</h3>
+              <p class="carousel-slide-desc">Precisão anatômica em 38 medidas com modelagem tridimensional exclusiva</p>
+            </div>
+          </div>
+
+          <!-- Slide 3 -->
+          <div class="hero-carousel-slide" data-index="2" data-spec-left="SPEC: GURKHA MILITARY WAIST" data-spec-right="LORO PIANA SUPER 150S">
+            <img src="assets/images/hero/slide-3-trousers.jpg?v=2" alt="Calça Sartorial Gurkha" class="carousel-slide-img">
+            <div class="carousel-slide-overlay">
+              <span class="carousel-slide-badge">ALFAIATARIA ITALIANA</span>
+              <h3 class="carousel-slide-title">Calça Sartorial Cós Gurkha</h3>
+              <p class="carousel-slide-desc">Fivelas duplas em latão polido, pregas fundas e barra italiana de 4,5 cm</p>
+            </div>
+          </div>
+
+          <!-- Slide 4 -->
+          <div class="hero-carousel-slide" data-index="3" data-spec-left="SPEC: RARISSIME ARCHIVE" data-spec-right="5.000+ EXCLUSIVE PATTERNS">
+            <img src="assets/images/hero/slide-4-fabrics.jpg" alt="Tecidos Nobres Loro Piana e Scabal" class="carousel-slide-img">
+            <div class="carousel-slide-overlay">
+              <span class="carousel-slide-badge">ACERVO INTERNACIONAL</span>
+              <h3 class="carousel-slide-title">Tecidos Loro Piana &amp; Scabal</h3>
+              <p class="carousel-slide-desc">Seleção rara de lãs frias, casimiras e sedas puras de Milão e Biella</p>
+            </div>
+          </div>
+
+          <!-- NAVIGATION ARROWS -->
+          <button class="carousel-nav-btn prev" onclick="prevHeroSlide(event)" title="Slide anterior" aria-label="Anterior">‹</button>
+          <button class="carousel-nav-btn next" onclick="nextHeroSlide(event)" title="Próximo slide" aria-label="Próximo">›</button>
+        </div>
+
+        <!-- FOOTER DYNAMIC SPECIFICATION -->
+        <div class="art-frame-footer">
+          <span id="heroCarouselSpecLeft">SPEC: FULL CANVAS CRAFTSMANSHIP</span>
+          <span id="heroCarouselSpecRight">SUPER 180s WOOL &amp; CASHMERE</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- Metrics -->
+    <div class="heritage-bar-wrap">
+      <div class="heritage-bar">
+        <div class="metric-item">
+          <h3>38</h3>
+          <span class="metric-label">Pontos Anatômicos 3D</span>
+          <p>Precisão de corte milimétrico</p>
+        </div>
+        <div class="metric-item">
+          <h3>100%</h3>
+          <span class="metric-label">Full Canvas Flutuante</span>
+          <p>Estrutura artesanal em crina de cavalo</p>
+        </div>
+        <div class="metric-item">
+          <h3>5.000+</h3>
+          <span class="metric-label">Tecidos Internacionais</span>
+          <p>Loro Piana, Scabal &amp; Thomas Mason</p>
+        </div>
+        <div class="metric-item">
+          <h3>3 Suítes</h3>
+          <span class="metric-label">Provas Exclusivas</span>
+          <p>São Paulo, Milão &amp; Londres</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Acervo Sartorial -->
+    <section class="acervo-section" id="acervo">
+      <div class="section-vintage-header">
+        <span class="vintage-tag">O Acervo Sartorial</span>
+        <h2>Pilares da Alfaiataria Contemporânea</h2>
+        <p>Desenvolvidos individualmente para acompanhar sua rotina com distinção, elegância atemporal e alma de alfaiataria clássica.</p>
+      </div>
+
+      <div class="acervo-grid">
+        <!-- Camisas -->
+        <div class="acervo-card">
+          <div>
+            <div class="icon-stage-vintage">
+              <div class="category-circle-img-wrap">
+                <img src="assets/images/categories/cat-camisas.jpg" alt="Camisas Sociais Sob Medida" class="category-circle-img">
+              </div>
+            </div>
+            <span class="card-material-tag">Algodão Egípcio Giza 45 &amp; Thomas Mason</span>
+            <h3>Camisas Sociais</h3>
+            <p>Colarinhos italianos estruturados, punhos franceses para abotoaduras, costura refinada de 9 pontos por centímetro e monograma bordado à mão.</p>
+          </div>
+          <div class="card-action-link" onclick="filterProducts('camisas'); scrollToProducts();">
+            Configurar Camisa Sob Medida →
+          </div>
+        </div>
+
+        <!-- Calças -->
+        <div class="acervo-card featured">
+          <div class="acervo-featured-badge">Mais Solicitado</div>
+          <div>
+            <div class="icon-stage-vintage">
+              <div class="category-circle-img-wrap">
+                <img src="assets/images/categories/cat-calcas-gurkha.jpg?v=2" alt="Calças de Alfaiataria Gurkha" class="category-circle-img" style="object-position: center 42%;">
+              </div>
+            </div>
+            <span class="card-material-tag">Lã Fria Super 150s &amp; Natural Stretch</span>
+            <h3>Calças de Alfaiataria</h3>
+            <p>Cós gurkha com fivelas laterais sob medida, pregas duplas italianas, vinco permanente e barra italiana com caimento arquitetônico milimétrico.</p>
+          </div>
+          <div class="card-action-link" onclick="filterProducts('calcas'); scrollToProducts();" style="color: var(--gold-antique);">
+            Personalizar Modelagem de Calça →
+          </div>
+        </div>
+
+        <!-- Ternos -->
+        <div class="acervo-card">
+          <div>
+            <div class="icon-stage-vintage">
+              <div class="category-circle-img-wrap">
+                <img src="assets/images/categories/cat-ternos.jpg?v=3" alt="Ternos e Blazers Privé Full Canvas" class="category-circle-img" style="object-position: center 22%;">
+              </div>
+            </div>
+            <span class="card-material-tag">Full Canvas Loro Piana &amp; Scabal</span>
+            <h3>Ternos &amp; Blazers Privé</h3>
+            <p>Estruturação sem colagem em crina de cavalo, lapelas de bico ou entalhe, forro em cupro respirável e caimento impecável para gala e executivo.</p>
+          </div>
+          <div class="card-action-link" onclick="filterProducts('ternos'); scrollToProducts();">
+            Agendar Degustação de Tecidos →
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ACERVO SOB MEDIDA — PRODUTOS EM DESTAQUE (DIRETO NA PARTE DE BAIXO DOS PILARES) -->
+    <section class="acervo-produtos-section" id="acervo-produtos">
+      <div class="section-vintage-header">
+        <span class="vintage-tag">Peças Exclusivas Sob Encomenda</span>
+        <h2>Acervo Sob Medida — Coleção Sartorial</h2>
+        <p>Selecione as peças que deseja confeccionar. Cada criação é talhada individualmente com base em suas 38 medidas anatômicas e tecidos europeus nobres.</p>
+      </div>
+
+      <!-- Filter Tabs -->
+      <div class="products-filter-bar">
+        <button class="filter-tab-btn active" id="filter-btn-todos" onclick="filterProducts('todos')">Todos os Trajes</button>
+        <button class="filter-tab-btn" id="filter-btn-camisas" onclick="filterProducts('camisas')">Camisas Sociais</button>
+        <button class="filter-tab-btn" id="filter-btn-calcas" onclick="filterProducts('calcas')">Calças de Alfaiataria</button>
+        <button class="filter-tab-btn" id="filter-btn-ternos" onclick="filterProducts('ternos')">Ternos &amp; Blazers</button>
+      </div>
+
+      <!-- Products Grid (rendered dynamically by app.js) -->
+      <div class="products-catalog-grid" id="productsCatalogGrid"></div>
+    </section>
+
+    <!-- Clube Banner -->
+    <div class="club-banner-wrap" id="atelier">
+      <div class="club-banner">
+        <div class="club-banner-left">
+          <div class="club-monogram-circle">A</div>
+          <div class="club-text">
+            <span>Acesso Privativo</span>
+            <h2>Clube Aguiar Privé — Lounge Digital</h2>
+            <p>Acompanhe o corte artesanal de suas peças, consulte suas 38 medidas anatômicas e reserve suítes de prova com seu Master Tailor.</p>
+          </div>
+        </div>
+        <div class="club-banner-cta">
+          <button class="btn-ink-primary" onclick="openAuthModal('signup')">
+            Criar Conta Aguiar Privé →
+          </button>
+          <a class="link-small-login" onclick="openAuthModal('signin')">Já é membro? Fazer login ↗</a>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <!-- CHECKOUT / PAYMENT AREA -->
+  <main id="view-checkout" class="view-container">
+    <div class="checkout-page-wrap">
+      
+      <div class="checkout-breadcrumb-row">
+        <button class="btn-back-link" onclick="toggleCartDrawer(true)">
+          ← Voltar para a Sacola de Compras
+        </button>
+        <div class="checkout-steps">
+          <span id="checkoutCountBreadcrumb">1. Sacola (0 Itens)</span>
+          <span>&gt;</span>
+          <span>2. Prova &amp; Medidas</span>
+          <span>&gt;</span>
+          <span class="active">3. Pagamento &amp; Finalização</span>
+        </div>
+        <div style="font-size: 11px; color: var(--ink-muted);">
+          Perfil: <strong>Arthur Montgomery</strong> • Privé
+        </div>
+      </div>
+
+      <!-- Items List Recap (dynamically synchronized with cart state) -->
+      <div class="checkout-items-card" id="checkoutItemsCard">
+        <div class="checkout-card-header">
+          Itens Encomendados • Resumo da Confecção Sob Medida
+        </div>
+      </div>
+
+      <div style="margin-bottom: 12px;">
+        <span class="card-material-tag">Método de Pagamento</span>
+        <h3 style="font-family: var(--font-display); font-size: 20px; color: var(--ink-primary);">Selecione Como Deseja Efetuar o Pagamento</h3>
+      </div>
+
+      <div class="payment-methods-grid">
+        <div class="payment-option-tab selected" id="tab-pix" onclick="selectPaymentMethod('pix')">
+          <div class="tab-left-radio">
+            <div class="radio-circle"></div>
+            <span>PIX Instantâneo</span>
+          </div>
+          <span class="discount-pill">ECONOMIZE 5%</span>
+        </div>
+
+        <div class="payment-option-tab" id="tab-card" onclick="selectPaymentMethod('card')">
+          <div class="tab-left-radio">
+            <div class="radio-circle"></div>
+            <span>Cartão de Crédito</span>
+          </div>
+          <span style="font-size: 10px; color: var(--ink-muted);">Até 10x sem juros</span>
+        </div>
+
+        <div class="payment-option-tab" id="tab-concierge" onclick="selectPaymentMethod('concierge')">
+          <div class="tab-left-radio">
+            <div class="radio-circle"></div>
+            <span>Faturamento Concierge Privé</span>
+          </div>
+          <span style="font-size: 10px; color: var(--gold-antique); font-weight: 700;">Membros VIP</span>
+        </div>
+      </div>
+
+      <!-- PIX Box -->
+      <div class="pix-checkout-box" id="box-pix-content">
+        <div class="pix-split-layout">
+          
+          <div class="qr-card-container">
+            <div class="qr-svg-holder">
+              <svg class="keep-light qr-code-svg" width="200" height="200" viewBox="0 0 200 200" fill="none">
+                <rect width="200" height="200" rx="4" fill="#FFFFFF"/>
+                <rect x="15" y="15" width="46" height="46" rx="4" fill="#181614"/>
+                <rect x="23" y="23" width="30" height="30" rx="2" fill="#FFFFFF"/>
+                <rect x="29" y="29" width="18" height="18" rx="1" fill="#181614"/>
+                <rect x="139" y="15" width="46" height="46" rx="4" fill="#181614"/>
+                <rect x="147" y="23" width="30" height="30" rx="2" fill="#FFFFFF"/>
+                <rect x="153" y="29" width="18" height="18" rx="1" fill="#181614"/>
+                <rect x="15" y="139" width="46" height="46" rx="4" fill="#181614"/>
+                <rect x="23" y="147" width="30" height="30" rx="2" fill="#FFFFFF"/>
+                <rect x="29" y="153" width="18" height="18" rx="1" fill="#181614"/>
+                <rect x="70" y="20" width="12" height="12" fill="#181614"/>
+                <rect x="90" y="20" width="24" height="8" fill="#181614"/>
+                <rect x="120" y="24" width="10" height="10" fill="#181614"/>
+                <rect x="70" y="40" width="14" height="20" fill="#181614"/>
+                <rect x="94" y="36" width="16" height="12" fill="#181614"/>
+                <rect x="116" y="44" width="14" height="14" fill="#181614"/>
+                <rect x="20" y="70" width="10" height="24" fill="#181614"/>
+                <rect x="40" y="74" width="20" height="10" fill="#181614"/>
+                <rect x="30" y="90" width="15" height="15" fill="#181614"/>
+                <rect x="20" y="112" width="24" height="12" fill="#181614"/>
+                <rect x="140" y="70" width="24" height="10" fill="#181614"/>
+                <rect x="170" y="74" width="14" height="24" fill="#181614"/>
+                <rect x="146" y="90" width="16" height="16" fill="#181614"/>
+                <rect x="140" y="114" width="18" height="14" fill="#181614"/>
+                <rect x="166" y="110" width="18" height="12" fill="#181614"/>
+                <rect x="70" y="140" width="14" height="18" fill="#181614"/>
+                <rect x="90" y="146" width="20" height="12" fill="#181614"/>
+                <rect x="118" y="140" width="12" height="24" fill="#181614"/>
+                <rect x="74" y="166" width="20" height="14" fill="#181614"/>
+                <rect x="100" y="164" width="14" height="16" fill="#181614"/>
+                <rect x="120" y="170" width="16" height="12" fill="#181614"/>
+                <rect x="144" y="144" width="18" height="14" fill="#181614"/>
+                <rect x="168" y="150" width="16" height="16" fill="#181614"/>
+                <rect x="146" y="168" width="38" height="14" fill="#181614"/>
+                <circle cx="100" cy="100" r="24" fill="#FFFFFF" stroke="#A47B36" stroke-width="2"/>
+                <circle cx="100" cy="100" r="20" fill="#FAF7F2"/>
+                <text x="100" y="107" text-anchor="middle" fill="#A47B36" font-family="'Cinzel', serif" font-size="18" font-weight="800">A</text>
+              </svg>
+            </div>
+            <div class="qr-timer">
+              <div class="timer-dot"></div>
+              <span>Código válido por: <strong id="pix-countdown">14:52</strong></span>
+            </div>
+          </div>
+
+          <div class="pix-info-side">
+            <div>
+              <span style="font-size: 11px; color: var(--ink-muted); text-transform: uppercase;">Valor com Desconto de Membro</span>
+              <div class="pix-price-banner">
+                <span class="pix-old-price" id="pixSubtotalVal">R$ 0,00</span>
+                <span class="pix-final-price" id="pixFinalTotal">R$ 0,00</span>
+                <span class="pix-badge-off" id="pixFinalBadge">5% OFF APLICADO</span>
+              </div>
+            </div>
+
+            <div>
+              <label class="auth-label" style="display:block; margin-bottom: 6px;">Chave PIX Copia e Cola</label>
+              <div class="pix-copy-input-row">
+                <input type="text" readonly class="pix-code-field" id="pixKeyInput" value="00020126580014br.gov.bcb.pix0136aguiar-bespoke-atelier-14100-priv...">
+                <button class="btn-copy-pix" id="copyPixBtn" onclick="copyPixCode()">Copiar Chave</button>
+              </div>
+            </div>
+
+            <div>
+              <span class="auth-label" style="display:block; margin-bottom: 6px;">Como pagar em 3 passos:</span>
+              <div class="pix-steps-row">
+                <div class="step-pill">
+                  <strong>1. Abra o app</strong>
+                  Acesse a área PIX no seu banco
+                </div>
+                <div class="step-pill">
+                  <strong>2. Aponte ou Cole</strong>
+                  Escaneie o QR Code ou cole a chave
+                </div>
+                <div class="step-pill">
+                  <strong>3. Confirmação</strong>
+                  Master Tailor recebe na hora
+                </div>
+              </div>
+            </div>
+
+            <button class="btn-confirm-pix" onclick="alert('Pagamento via PIX confirmado! Seu Master Tailor foi notificado e entrará em contato para sua prova.')">
+              Já Fiz o Pagamento via PIX — Confirmar Pedido →
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- CREDIT CARD BOX -->
+      <div class="card-checkout-box" id="box-card-content" style="display: none;">
+        <div class="card-checkout-split">
+          
+          <!-- LEFT: Virtual Luxury Bespoke Card Preview & Autofill -->
+          <div class="virtual-card-wrapper">
+            <div class="luxury-credit-card" id="virtualCardPreview">
+              <div class="card-top-row">
+                <div class="card-chip-svg">
+                  <!-- Golden EMV Chip & Contactless -->
+                  <svg width="42" height="30" viewBox="0 0 44 32" fill="none">
+                    <rect width="44" height="32" rx="4" fill="url(#chip-gold-grad)"/>
+                    <rect x="2" y="2" width="40" height="28" rx="3" stroke="#8F6627" stroke-width="0.8"/>
+                    <line x1="2" y1="16" x2="42" y2="16" stroke="#8F6627" stroke-width="0.8"/>
+                    <line x1="16" y1="2" x2="16" y2="30" stroke="#8F6627" stroke-width="0.8"/>
+                    <line x1="28" y1="2" x2="28" y2="30" stroke="#8F6627" stroke-width="0.8"/>
+                    <defs>
+                      <linearGradient id="chip-gold-grad" x1="0" y1="0" x2="44" y2="32" gradientUnits="userSpaceOnUse">
+                        <stop stop-color="#E5C178"/>
+                        <stop offset="0.5" stop-color="#B88936"/>
+                        <stop offset="1" stop-color="#DEB764"/>
+                      </linearGradient>
+                    </defs>
+                  </svg>
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#C69E52" stroke-width="2">
+                    <path d="M12 2a10 10 0 0 1 10 10M12 6a6 6 0 0 1 6 6M12 10a2 2 0 0 1 2 2"/>
+                  </svg>
+                </div>
+                <div class="card-brand-badge" id="cardBrandBadge">AGUIAR PRIVÉ</div>
+              </div>
+
+              <div class="card-number-display" id="cardDisplayNumber">•••• •••• •••• ••••</div>
+
+              <div class="card-bottom-row">
+                <div>
+                  <span class="card-label-small">TITULAR</span>
+                  <div class="card-name-display" id="cardDisplayName">NOME DO TITULAR</div>
+                </div>
+                <div style="text-align: right;">
+                  <span class="card-label-small">VALIDADE</span>
+                  <div class="card-exp-display" id="cardDisplayExp">MM/AA</div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Auto-fill hypothetical card test button -->
+            <button type="button" class="btn-autofill-card" onclick="autoFillHypotheticalCard()">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink: 0;"><rect x="2" y="5" width="20" height="14" rx="2"></rect><line x1="2" y1="10" x2="22" y2="10"></line><circle cx="6" cy="15" r="1" fill="currentColor"></circle></svg>
+              <span>Auto-preencher Cartão Hipotético (Simulação Rápida)</span>
+            </button>
+            <div class="autofill-tip-text">
+              Gera instantaneamente dados de teste seguros para você visualizar a simulação das parcelas e taxas.
+            </div>
+          </div>
+
+          <!-- RIGHT: Card Form & Installment Options -->
+          <div class="card-form-side">
+            <div class="card-step-badge">
+              <span class="step-num">ETAPA 1</span>
+              <span>Dados do Cartão de Crédito</span>
+            </div>
+
+            <div class="card-input-grid" id="cardInputFieldsArea">
+              <div class="card-input-group full-width">
+                <label for="cardNumberInput">Número do Cartão</label>
+                <div class="input-with-icon">
+                  <input type="text" id="cardNumberInput" placeholder="0000 0000 0000 0000" maxlength="19" oninput="handleCardNumberInput(this)">
+                  <span class="card-detected-icon" id="cardDetectedIcon"></span>
+                </div>
+              </div>
+
+              <div class="card-input-group full-width">
+                <label for="cardHolderInput">Nome Impresso no Cartão</label>
+                <input type="text" id="cardHolderInput" placeholder="Ex: ARTHUR MONTGOMERY" oninput="handleCardHolderInput(this)">
+              </div>
+
+              <div class="card-input-group">
+                <label for="cardExpiryInput">Validade (MM/AA)</label>
+                <input type="text" id="cardExpiryInput" placeholder="MM/AA" maxlength="5" oninput="handleCardExpiryInput(this)">
+              </div>
+
+              <div class="card-input-group">
+                <label for="cardCvvInput">Código CVV</label>
+                <input type="password" id="cardCvvInput" placeholder="•••" maxlength="4" oninput="handleCardCvvInput(this)">
+              </div>
+
+              <div class="card-input-group full-width">
+                <label for="cardDocInput">CPF do Titular</label>
+                <input type="text" id="cardDocInput" placeholder="000.000.000-00" maxlength="14" oninput="handleCardDocInput(this)">
+              </div>
+
+              <div class="card-input-group full-width">
+                <button type="button" class="btn-add-card" id="btnAddCard" onclick="confirmCardAndShowInstallments()">
+                  Adicionar Cartão &amp; Escolher Parcelamento →
+                </button>
+              </div>
+            </div>
+
+            <!-- STEP 2: INSTALLMENTS SELECTION (Visible after card is added/filled) -->
+            <div class="card-installments-section" id="cardInstallmentsSection" style="display: none;">
+              <div class="card-step-badge active-step">
+                <span class="step-num">ETAPA 2</span>
+                <span>Escolha o Parcelamento &amp; Condições</span>
+              </div>
+
+              <div class="card-confirmed-banner">
+                <div class="card-confirmed-left">
+                  <span class="check-circle-gold">✓</span>
+                  <div>
+                    <strong id="confirmedCardSummary">Cartão Adicionado com Sucesso</strong>
+                    <span id="confirmedCardHolder">Arthur Montgomery • Venc. 12/29</span>
+                  </div>
+                </div>
+                <button type="button" class="btn-change-card" onclick="editCardDetails()">Alterar Cartão</button>
+              </div>
+
+              <div class="installment-select-group">
+                <label for="installmentSelect">Em quantas vezes deseja parcelar?</label>
+                <select id="installmentSelect" class="installment-dropdown" onchange="handleInstallmentChange(this.value)">
+                  <!-- Dynamically populated options from 1x to 12x -->
+                </select>
+              </div>
+
+              <!-- Installment Breakdown Card -->
+              <div class="installment-summary-card">
+                <div class="inst-line">
+                  <span>Valor das Peças:</span>
+                  <span id="instSubtotalDisplay">R$ 0,00</span>
+                </div>
+                <div class="inst-line">
+                  <span>Opção Selecionada:</span>
+                  <strong style="color: var(--gold-antique);" id="instSelectedPlan">1x de R$ 0,00</strong>
+                </div>
+                <div class="inst-line">
+                  <span>Condição de Juros:</span>
+                  <span id="instRateDisplay" class="rate-tag">Sem Juros (Cortesía Privé)</span>
+                </div>
+                <div class="inst-line total">
+                  <span>Total com Parcelamento:</span>
+                  <span class="inst-total-price" id="instTotalDisplay">R$ 0,00</span>
+                </div>
+              </div>
+
+              <button type="button" class="btn-confirm-card-payment" onclick="processCardPayment()">
+                Confirmar Pagamento no Cartão — Finalizar Pedido →
+              </button>
+            </div>
+
+          </div>
+
+        </div>
+      </div>
+
+      <!-- CONCIERGE BILLING BOX -->
+      <div class="concierge-checkout-box" id="box-concierge-content" style="display: none;">
+        <div class="concierge-inner-frame">
+          <div class="concierge-crest-icon">
+            <img src="assets/images/aguiar-crest.svg" width="48" height="48" alt="Brasão Aguiar Privé" class="concierge-crest-img">
+          </div>
+          <h3>Faturamento Concierge Privé Aguiar</h3>
+          <p>Disponível com exclusividade para clientes cadastrados no Clube Privé. A fatura consolidada com prazo estendido (30 ou 60 dias) será encaminhada diretamente ao seu escritório ou concierge particular após a prova das peças.</p>
+          <div class="concierge-contact-card">
+            <span>Atendimento Concierge VIP Direto:</span>
+            <strong>+55 (11) 98844-0020 • concierge@aguiar-bespoke.com</strong>
+          </div>
+          <button type="button" class="btn-confirm-concierge" onclick="processConciergePayment()">
+            Solicitar Faturamento em Conta Privé →
+          </button>
+        </div>
+      </div>
+
+    </div>
+  </main>
+
+  <!-- CART FLYOUT DRAWER -->
+  <div class="cart-scrim-backdrop" id="cartBackdrop" onclick="toggleCartDrawer(false)"></div>
+  
+  <aside class="cart-flyout-drawer" id="cartDrawer">
+    <div>
+      <div class="drawer-header">
+        <div class="drawer-top-row">
+          <div class="drawer-title-group">
+            <h2>Sacola de Compras</h2>
+            <span class="drawer-count-badge" id="drawerCountBadge">0 PEÇAS</span>
+          </div>
+          <button class="btn-drawer-close" onclick="toggleCartDrawer(false)" title="Fechar Sacola">✕</button>
+        </div>
+        <div class="drawer-sync-row">
+          <div class="sync-dot-green"></div>
+          <span>Perfil Ativo: <strong style="color: var(--ink-primary);">Arthur Montgomery</strong> (38 medidas sincronizadas)</span>
+        </div>
+      </div>
+
+      <!-- DYNAMIC ITEMS LIST OR EMPTY STATE (RENDERED BY JS) -->
+      <div class="drawer-items-list" id="drawerItemsList"></div>
+
+      <div class="drawer-vip-box">
+        <span>✓</span>
+        <span>Prova de confirmação e ajustes finais do Master Tailor inclusos.</span>
+      </div>
+    </div>
+
+    <div>
+      <div class="drawer-summary">
+        <div class="summary-line">
+          <span id="drawerItemsCountLabel">Subtotal das Peças (0)</span>
+          <span style="font-weight: 700;" id="drawerSubtotal">R$ 0,00</span>
+        </div>
+        <div class="summary-line accent">
+          <span>Suíte de Prova &amp; Ajustes Finos</span>
+          <span>CORTESIA PRIVÉ</span>
+        </div>
+        <div class="summary-line accent">
+          <span>Embalagem de Viagem em Couro</span>
+          <span>INCLUSA</span>
+        </div>
+        <div class="summary-line total">
+          <span>Total Estimado</span>
+          <span class="total-val" id="drawerTotal">R$ 0,00</span>
+        </div>
+        <div class="installment-text" id="drawerInstallmentText">
+          Ou até 10x sem juros no Cartão Private após adicionar itens
+        </div>
+      </div>
+
+      <div class="drawer-bottom-actions">
+        <button class="btn-checkout-drawer disabled" id="btnDrawerCheckout" onclick="goToPaymentPage()">
+          Finalizar e Ir para Forma de Pagamento →
+        </button>
+        <div style="text-align: center; font-size: 10px; color: var(--ink-muted); margin-top: 4px;">
+          Ambiente Criptografado 256-bit • Concierge VIP: +55 11 98844-0020
+        </div>
+      </div>
+    </div>
+  </aside>
+
+  <!-- PROFILE / MEMBER LOUNGE FLYOUT DRAWER -->
+  <div class="profile-scrim-backdrop" id="profileBackdrop" onclick="toggleProfileDrawer(false)"></div>
+
+  <aside class="profile-flyout-drawer" id="profileDrawer">
+    <div style="display: flex; flex-direction: column; height: 100%; min-height: 0;">
+      <!-- TOP HEADER -->
+      <div class="profile-drawer-header">
+        <div class="profile-drawer-top">
+          <div class="profile-drawer-title">
+            <span class="profile-sup-label">AGUIAR PRIVÉ CLUB</span>
+            <h2>Lounge do Membro</h2>
+          </div>
+          <button class="btn-drawer-close" onclick="toggleProfileDrawer(false)" title="Fechar Menu">✕</button>
+        </div>
+
+        <!-- MEMBER CARD -->
+        <div class="member-identity-card">
+          <div class="member-avatar-col">
+            <div class="member-avatar-circle" id="profileAvatarMonogram">AM</div>
+          </div>
+          <div class="member-info-col">
+            <div class="member-name-row">
+              <h3 id="profileMemberName">Arthur Montgomery</h3>
+              <span class="badge-vip-pill">Membro Privé</span>
+            </div>
+            <div class="member-meta-grid">
+              <div>
+                <span class="meta-label">ID MEMBRO</span>
+                <span class="meta-val">#AG-1928-88</span>
+              </div>
+              <div>
+                <span class="meta-label">SUÍTE PREFERENCIAL</span>
+                <span class="meta-val">Jardins (SP)</span>
+              </div>
+              <div>
+                <span class="meta-label">MEDIDAS 3D</span>
+                <span class="meta-val accent-gold">38 Salvas ✓</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- FILTER TABS: COMPRADOS, PROCESSAMENTO, ENVIO, TODOS OS PRODUTOS -->
+        <div class="profile-nav-tabs">
+          <button class="profile-tab-btn active" id="tabOrderAll" onclick="filterProfileOrders('all')">
+            <span>Comprados</span>
+            <span class="tab-count-badge" id="countAllOrders">3</span>
+          </button>
+          <button class="profile-tab-btn" id="tabOrderProcessing" onclick="filterProfileOrders('processing')">
+            <span>Processamento</span>
+            <span class="tab-count-badge" id="countProcessingOrders">1</span>
+          </button>
+          <button class="profile-tab-btn" id="tabOrderShipping" onclick="filterProfileOrders('shipping')">
+            <span>Envio</span>
+            <span class="tab-count-badge" id="countShippingOrders">1</span>
+          </button>
+          <button class="profile-tab-btn profile-tab-catalog" onclick="goToCatalogFromProfile()" title="Ver todos os produtos do atelier">
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <rect x="3" y="3" width="7" height="7"/>
+              <rect x="14" y="3" width="7" height="7"/>
+              <rect x="14" y="14" width="7" height="7"/>
+              <rect x="3" y="14" width="7" height="7"/>
+            </svg>
+            <span>Todos os Produtos</span>
+          </button>
+        </div>
+      </div>
+
+      <!-- ORDERS LIST / CONTENT AREA -->
+      <div class="profile-orders-scroll" id="profileOrdersContainer">
+        <!-- RENDERED BY JAVASCRIPT -->
+      </div>
+
+      <!-- DRAWER FOOTER ACTIONS -->
+      <div class="profile-drawer-footer">
+        <div class="profile-footer-concierge">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+            <path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/>
+          </svg>
+          <div>
+            <span>Concierge VIP Dedicado: <strong>Matteo Rossi (+55 11 98844-0020)</strong></span>
+          </div>
+        </div>
+        <div class="profile-footer-buttons">
+          <button type="button" class="btn-profile-catalog" onclick="goToCatalogFromProfile()">
+            Ver Catálogo Completo →
+          </button>
+          <button type="button" class="btn-profile-logout" onclick="logoutUserFromDrawer()">
+            Sair da Conta
+          </button>
+        </div>
+      </div>
+    </div>
+  </aside>
+
+  <!-- AUTH MODAL (SIGN IN & SIGN UP) -->
+  <div class="auth-overlay-modal" id="authModal">
+    <div class="auth-card-frame">
+      <button class="btn-auth-close" onclick="closeAuthModal()" title="Fechar">✕</button>
+
+      <div class="auth-left-side">
+        <div>
+          <div class="brand-pills" style="margin-bottom: 12px;">
+            <div class="pill pill-gold"></div>
+            <div class="pill pill-ink"></div>
+          </div>
+          <div class="brand-texts" style="margin-bottom: 24px;">
+            <h1 style="font-size: 24px;">AGUIAR</h1>
+            <span>BESPOKE TAILORING</span>
+          </div>
+
+          <span class="auth-brand-badge">Aguiar Privé Club</span>
+          <div class="auth-headline">
+            THE ART OF
+            <span class="muted">BESPOKE LUXURY.</span>
+          </div>
+          <p class="auth-narrative">
+            Acesse seu lounge digital privativo para acompanhar a confecção das suas peças, consultar suas 38 medidas anatômicas e reservar suítes de prova exclusivas.
+          </p>
+        </div>
+
+        <div class="auth-emblem-wrap">
+          <svg width="70" height="70" viewBox="0 0 100 100" fill="none">
+            <polygon points="40,24 60,24 65,37 50,49 35,37" fill="#181614"/>
+            <line x1="50" y1="49" x2="50" y2="88" stroke="#A47B36" stroke-width="1.5"/>
+            <circle cx="50" cy="62" r="1.5" fill="#A47B36"/>
+            <path d="M 35,37 L 22,50 L 30,57 L 16,84 L 22,88 L 50,90 L 78,88 L 84,84 L 70,57 L 78,50 L 65,37" 
+                  stroke="#181614" stroke-width="1.6" stroke-linejoin="round"/>
+            <line x1="26" y1="62" x2="38" y2="60" stroke="#A47B36" stroke-width="1.6"/>
+          </svg>
+        </div>
+
+        <div class="auth-perks-list">
+          <div><span>✓</span> Histórico de 38 medidas anatômicas 3D criptografadas</div>
+          <div><span>✓</span> Reserva prioritária de suítes de prova em São Paulo e Milão</div>
+          <div><span>✓</span> Acesso antecipado a tecidos raros Loro Piana e Scabal</div>
+        </div>
+      </div>
+
+      <div class="auth-right-side">
+        <div>
+          <div class="auth-form-header">
+            <div class="auth-monogram-circle">A</div>
+            <div class="auth-form-title">
+              <span>Portal Exclusivo</span>
+              <h3 id="authHeaderTitle">Acesso Aguiar Privé</h3>
+            </div>
+          </div>
+
+          <div class="auth-mode-toggle">
+            <button class="auth-tab-btn active" id="tabBtnSignIn" onclick="setAuthMode('signin')">Entrar (Sign In)</button>
+            <button class="auth-tab-btn" id="tabBtnSignUp" onclick="setAuthMode('signup')">Novo Cadastro (Sign Up)</button>
+          </div>
+
+          <!-- SIGN IN FORM -->
+          <form id="formSignIn" onsubmit="handleAuthSubmit(event, 'signin')">
+            <div class="auth-form-group">
+              <label class="auth-label">E-mail ou ID de Membro</label>
+              <input type="email" class="auth-input" id="authEmailInput" value="arthur.vip@aguiar.com" required>
+            </div>
+            <div class="auth-form-group">
+              <div style="display:flex; justify-content:space-between;">
+                <label class="auth-label">Senha de Acesso</label>
+                <a href="javascript:void(0)" onclick="forgotPasswordNotice(event)" style="font-size:10px; color:var(--gold-antique); font-weight:700; text-decoration:none;">ESQUECEU?</a>
+              </div>
+              <input type="password" class="auth-input" id="authPasswordInput" value="••••••••••••••" required>
+            </div>
+            <div class="auth-checkbox-row">
+              <input type="checkbox" checked id="chkSaveLogin">
+              <label for="chkSaveLogin">Manter sessão salva com segurança</label>
+            </div>
+            <button type="submit" class="btn-auth-submit">
+              Entrar no Lounge Aguiar Privé →
+            </button>
+            <div class="auth-quick-auth-row">
+              <button type="button" class="btn-quick-auth" onclick="loginViaWhatsAppConcierge()" title="Solicitar link de acesso direto via WhatsApp Concierge">
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/>
+                </svg>
+                <span>WhatsApp VIP</span>
+              </button>
+              <button type="button" class="btn-quick-auth btn-quick-biometry" onclick="quickBiometricAuth()" title="Acessar com biometria facial ou digital">
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M12 11c0 1.66-1.34 3-3 3s-3-1.34-3-3 1.34-3 3-3 3 1.34 3 3z"/>
+                  <path d="M12 2a10 10 0 0 0-10 10c0 4.99 3.65 9.12 8.44 9.88"/>
+                  <path d="M14 14.5c0 2.49-2.01 4.5-4.5 4.5"/>
+                  <path d="M17 11c0 4.42-3.58 8-8 8"/>
+                  <path d="M20 11c0 6.63-5.37 12-12 12"/>
+                </svg>
+                <span>Biometria / Digital</span>
+              </button>
+            </div>
+          </form>
+
+          <!-- SIGN UP FORM -->
+          <form id="formSignUp" style="display:none;" onsubmit="handleAuthSubmit(event, 'signup')">
+            <div class="auth-form-group">
+              <label class="auth-label">Nome Completo</label>
+              <input type="text" class="auth-input" placeholder="Ex: Arthur Montgomery" required>
+            </div>
+            <div class="auth-form-group">
+              <label class="auth-label">E-mail Pessoal ou Corporativo</label>
+              <input type="email" class="auth-input" placeholder="arthur.montgomery@executive.com" required>
+            </div>
+            <div class="auth-row-dual">
+              <div class="auth-form-group">
+                <label class="auth-label">WhatsApp Concierge</label>
+                <input type="tel" class="auth-input" placeholder="+55 11 98844-0020">
+              </div>
+              <div class="auth-form-group">
+                <label class="auth-label">Suíte Preferencial</label>
+                <select class="auth-input" style="cursor:pointer;">
+                  <option>São Paulo — Jardins</option>
+                  <option>Milão — Montenapoleone</option>
+                  <option>Londres — Savile Row</option>
+                </select>
+              </div>
+            </div>
+            <div class="auth-row-dual">
+              <div class="auth-form-group">
+                <label class="auth-label">Criar Senha Privé</label>
+                <input type="password" class="auth-input" placeholder="••••••••••••" required>
+              </div>
+              <div class="auth-form-group">
+                <label class="auth-label">Confirmar Senha</label>
+                <input type="password" class="auth-input" placeholder="••••••••••••" required>
+              </div>
+            </div>
+            <div class="auth-checkbox-row">
+              <input type="checkbox" checked id="chkTerms">
+              <label for="chkTerms">Aceito os Termos de Confidencialidade e Atendimento Privé</label>
+            </div>
+            <button type="submit" class="btn-auth-submit">
+              Concluir Cadastro no Clube Aguiar Privé →
+            </button>
+          </form>
+        </div>
+
+        <div class="auth-bottom-switch-card">
+          <p id="authBottomText">Ainda não possui o Cartão de Membro Aguiar?</p>
+          <a id="authBottomLink" onclick="setAuthMode('signup')">SOLICITAR CONVITE DE ATELIER ↗</a>
+        </div>
+
+        <div style="font-size:10px; color:var(--ink-muted); text-align:center; margin-top:14px;">
+          Concierge VIP: +55 11 98844-0020 • concierge@aguiar.com
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- FOOTER -->
+  <footer class="site-footer">
+    <div class="footer-col">
+      <div class="brand-texts">
+        <h1>AGUIAR</h1>
+        <span>BESPOKE TAILORING</span>
+      </div>
+      <p style="margin-top: 14px;">
+        © 2026 Aguiar Atelier. Todos os direitos reservados. Alta alfaiataria masculina sob medida com inspiração nas casas históricas de Milão e Savile Row.
+      </p>
+    </div>
+
+    <div class="footer-col">
+      <h4>Suítes de Prova</h4>
+      <p>
+        São Paulo: Rua Oscar Freire, Jardins<br>
+        Milão: Via Montenapoleone, 8<br>
+        Londres: Savile Row, Mayfair
+      </p>
+    </div>
+
+    <div class="footer-col">
+      <h4>Concierge Dedicado</h4>
+      <span class="phone">+55 (11) 98844-0020</span>
+      <p style="margin-top: 4px;">
+        concierge@aguiar-bespoke.com<br>
+        Atendimento Privé Seg - Sáb (09h às 20h)
+      </p>
+    </div>
+  </footer>
+
+  <!-- TOAST NOTICE -->
+  <div id="toastNotice" class="toast-notice">
+    <span id="toastNoticeText">Item adicionado à sacola</span>
+    <button onclick="toggleCartDrawer(true)">Ver Sacola</button>
+  </div>
+
+  <!-- SCRIPT -->
+  <script src="js/app.js"></script>
+</body>
+</html>
+

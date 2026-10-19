@@ -1,0 +1,21 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" width="100%" height="100%">
+  <!-- High Rise Gurkha Waistband -->
+  <path d="M 28 20 L 72 20 L 71 28 L 29 28 Z" fill="#FFFFFF" stroke="#A47B36" stroke-width="2.2" stroke-linejoin="round"/>
+  <!-- Buckle detail -->
+  <rect x="44" y="21" width="12" height="6" rx="1.5" fill="none" stroke="#A47B36" stroke-width="1.8"/>
+  <line x1="50" y1="21" x2="50" y2="27" stroke="#A47B36" stroke-width="1.5"/>
+  <!-- Double Italian Pleats -->
+  <path d="M 36 28 L 37 44" stroke="#A47B36" stroke-width="1.5" stroke-linecap="round"/>
+  <path d="M 40 28 L 41 40" stroke="#A47B36" stroke-width="1.2" stroke-linecap="round"/>
+  <path d="M 64 28 L 63 44" stroke="#A47B36" stroke-width="1.5" stroke-linecap="round"/>
+  <path d="M 60 28 L 59 40" stroke="#A47B36" stroke-width="1.2" stroke-linecap="round"/>
+  <!-- Trouser Legs Outline with Sartorial Taper -->
+  <path d="M 29 28 L 26 82 L 44 82 L 50 48 L 56 82 L 74 82 L 71 28" fill="none" stroke="#181614" stroke-width="2.2" stroke-linejoin="round" stroke-linecap="round"/>
+  <!-- Permanent 4.5cm Turn-up Cuffs (Barra Italiana) -->
+  <rect x="25" y="77" width="19" height="5" fill="#FAF7F2" stroke="#A47B36" stroke-width="1.5"/>
+  <rect x="56" y="77" width="19" height="5" fill="#FAF7F2" stroke="#A47B36" stroke-width="1.5"/>
+  <!-- Front Sharp Crease Lines (Vinco) -->
+  <line x1="35" y1="36" x2="34" y2="77" stroke="#A47B36" stroke-width="1.2" stroke-dasharray="2,3"/>
+  <line x1="65" y1="36" x2="66" y2="77" stroke="#A47B36" stroke-width="1.2" stroke-dasharray="2,3"/>
+</svg>
+
