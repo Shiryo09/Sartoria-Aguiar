@@ -16,7 +16,9 @@ const PRODUCTS_CATALOG = [
     price: 1850,
     priceFormatted: 'R$ 1.850,00',
     badge: 'Essencial Bespoke',
-    iconType: 'shirt'
+    iconType: 'shirt',
+    image: 'assets/images/products/camisa-giza-1.jpg',
+    hoverImage: 'assets/images/products/camisa-giza-2.jpg'
   },
   {
     id: 'prod-calca-gurkha',
@@ -29,7 +31,9 @@ const PRODUCTS_CATALOG = [
     price: 2450,
     priceFormatted: 'R$ 2.450,00',
     badge: 'Mais Solicitado',
-    iconType: 'trousers'
+    iconType: 'trousers',
+    image: 'assets/images/products/calca-gurkha-1.jpg',
+    hoverImage: 'assets/images/products/calca-gurkha-2.jpg'
   },
   {
     id: 'prod-costume-fullcanvas',
@@ -42,7 +46,9 @@ const PRODUCTS_CATALOG = [
     price: 9800,
     priceFormatted: 'R$ 9.800,00',
     badge: 'Alta Costura',
-    iconType: 'suit'
+    iconType: 'suit',
+    image: 'assets/images/products/costume-fullcanvas-1.jpg',
+    hoverImage: 'assets/images/products/costume-fullcanvas-2.jpg'
   },
   {
     id: 'prod-blazer-nautico',
@@ -55,7 +61,9 @@ const PRODUCTS_CATALOG = [
     price: 5400,
     priceFormatted: 'R$ 5.400,00',
     badge: 'Ícone Riviera',
-    iconType: 'suit'
+    iconType: 'suit',
+    image: 'assets/images/categories/cat-ternos-blazer.jpg',
+    hoverImage: 'assets/images/categories/cat-ternos-prive.jpg'
   },
   {
     id: 'prod-calca-pleated-flannel',
@@ -68,7 +76,9 @@ const PRODUCTS_CATALOG = [
     price: 2650,
     priceFormatted: 'R$ 2.650,00',
     badge: 'Tecido Raro',
-    iconType: 'trousers'
+    iconType: 'trousers',
+    image: 'assets/images/categories/cat-calcas.jpg',
+    hoverImage: 'assets/images/categories/cat-calcas-gurkha.jpg'
   },
   {
     id: 'prod-camisa-linho-normandia',
@@ -81,7 +91,9 @@ const PRODUCTS_CATALOG = [
     price: 1980,
     priceFormatted: 'R$ 1.980,00',
     badge: 'Temporada Quente',
-    iconType: 'shirt'
+    iconType: 'shirt',
+    image: 'assets/images/categories/cat-camisas.jpg',
+    hoverImage: 'assets/images/categories/cat-camisas-cuff.jpg'
   }
 ];
 
@@ -96,21 +108,83 @@ function formatBRL(amount) {
 // 3. NAVIGATION & VIEW SWITCHING
 function switchMainView(viewName) {
   document.querySelectorAll('.view-container').forEach(el => el.classList.remove('active-view'));
-  document.querySelectorAll('.view-btn').forEach(btn => btn.classList.remove('active'));
+  document.querySelectorAll('.dropdown-item').forEach(btn => btn.classList.remove('active'));
 
   if (viewName === 'home') {
     document.getElementById('view-home').classList.add('active-view');
-    const btn = document.querySelectorAll('.view-btn')[0];
-    if (btn) btn.classList.add('active');
+    const homeBtn = document.getElementById('dropBtnHome');
+    if (homeBtn) homeBtn.classList.add('active');
     window.scrollTo({ top: 0, behavior: 'smooth' });
   } else if (viewName === 'checkout') {
     renderCheckoutRecap();
     document.getElementById('view-checkout').classList.add('active-view');
-    const btn = document.querySelectorAll('.view-btn')[2];
-    if (btn) btn.classList.add('active');
+    const checkoutBtn = document.getElementById('dropBtnCheckout');
+    if (checkoutBtn) checkoutBtn.classList.add('active');
     window.scrollTo({ top: 0, behavior: 'smooth' });
   }
 }
+
+// DROPDOWN MENU CONTROLLER FOR FAST VIEW SWITCHER
+function toggleViewDropdown(event) {
+  if (event) {
+    event.stopPropagation();
+  }
+  const wrap = document.getElementById('viewDropdownWrap');
+  const btn = document.getElementById('viewDropdownBtn');
+  if (!wrap) return;
+
+  const isOpen = wrap.classList.toggle('open');
+  if (btn) {
+    btn.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
+  }
+}
+
+function closeViewDropdown() {
+  const wrap = document.getElementById('viewDropdownWrap');
+  const btn = document.getElementById('viewDropdownBtn');
+  if (wrap) {
+    wrap.classList.remove('open');
+  }
+  if (btn) {
+    btn.setAttribute('aria-expanded', 'false');
+  }
+}
+
+function selectViewAndClose(viewName) {
+  switchMainView(viewName);
+  closeViewDropdown();
+}
+
+function selectActionAndClose(action) {
+  closeViewDropdown();
+  if (action === 'cart') {
+    toggleCartDrawer(true);
+  } else if (action === 'checkout') {
+    switchMainView('checkout');
+  } else if (action === 'profile') {
+    toggleProfileDrawer(true);
+  } else if (action === 'signin') {
+    openAuthModal('signin');
+  } else if (action === 'signup') {
+    openAuthModal('signup');
+  } else if (action === 'logout') {
+    logoutUser();
+  }
+}
+
+// Global click & Escape handlers for view dropdown
+document.addEventListener('click', function(e) {
+  const wrap = document.getElementById('viewDropdownWrap');
+  if (wrap && wrap.classList.contains('open') && !wrap.contains(e.target)) {
+    closeViewDropdown();
+  }
+});
+
+document.addEventListener('keydown', function(e) {
+  if (e.key === 'Escape') {
+    closeViewDropdown();
+  }
+});
 
 // Smooth scroll directly to the catalog
 function scrollToProducts(event) {
@@ -193,6 +267,13 @@ function updateCartBadges() {
   if (headerBadge) {
     headerBadge.innerText = totalCount;
     headerBadge.style.display = totalCount > 0 ? 'flex' : 'none';
+  }
+
+  // Dropdown menu badge
+  const dropBadge = document.getElementById('dropdownCartBadge');
+  if (dropBadge) {
+    dropBadge.innerText = totalCount;
+    dropBadge.style.display = totalCount > 0 ? 'inline-flex' : 'none';
   }
 
   // Drawer count title badge
@@ -463,12 +544,24 @@ function renderProductsCatalog(filterCategory = 'todos') {
 
     const pillsHtml = item.specs.map(spec => `<span class="product-spec-pill">${spec}</span>`).join('');
 
+    let mediaHtml = '';
+    if (item.image) {
+      mediaHtml = `
+        <div class="product-card-img-container">
+          <img src="${item.image}" alt="${item.name}" class="product-img-primary" loading="lazy">
+          ${item.hoverImage ? `<img src="${item.hoverImage}" alt="${item.name} - Detalhe" class="product-img-hover" loading="lazy">` : ''}
+        </div>
+      `;
+    } else {
+      mediaHtml = thumbSvg;
+    }
+
     html += `
       <div class="product-card">
         <div class="product-card-thumb-wrap">
           <span class="product-card-badge">${item.badge}</span>
           <span class="product-card-tailor-tag">Sob Medida</span>
-          ${thumbSvg}
+          ${mediaHtml}
         </div>
         <div class="product-card-body">
           <div class="product-fabric-origin">${item.fabric}</div>
@@ -582,6 +675,87 @@ function quickBiometricAuth() {
   }, 500);
 }
 
+// ========================================================
+// GOOGLE IDENTITY SERVICES CONFIGURATION
+// ========================================================
+// Para conectar com o Google real: crie seu Client ID no https://console.cloud.google.com
+// e substitua a chave abaixo pelo seu ID (ex: 123456789-abc.apps.googleusercontent.com)
+const GOOGLE_CLIENT_ID = 'SEU_CLIENT_ID_DO_GOOGLE_AQUI.apps.googleusercontent.com';
+
+function initGoogleAuth() {
+  if (typeof google !== 'undefined' && google.accounts && google.accounts.id) {
+    try {
+      google.accounts.id.initialize({
+        client_id: GOOGLE_CLIENT_ID,
+        callback: handleGoogleCredentialResponse,
+        auto_select: false,
+        cancel_on_tap_outside: true
+      });
+    } catch (e) {
+      console.warn('Google Identity Services inicialização:', e);
+    }
+  }
+}
+
+function handleGoogleCredentialResponse(response) {
+  try {
+    // Decodifica o token JWT retornado pelo Google Identity Services
+    const base64Url = response.credential.split('.')[1];
+    const base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
+    const jsonPayload = decodeURIComponent(atob(base64).split('').map(c => {
+      return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
+    }).join(''));
+
+    const profile = JSON.parse(jsonPayload);
+    const googleName = profile.name || profile.given_name || 'Arthur Montgomery';
+    const googleEmail = profile.email || '';
+    const googleAvatar = profile.picture || '';
+
+    localStorage.setItem('sartoria-logged-user', googleName);
+    if (googleEmail) localStorage.setItem('sartoria-logged-email', googleEmail);
+    if (googleAvatar) localStorage.setItem('sartoria-logged-avatar', googleAvatar);
+
+    updateLoggedUserState();
+    showToastNotice(`Autenticado com sucesso via Google: ${googleName}`);
+    closeAuthModal();
+  } catch (err) {
+    console.error('Erro na resposta do Google:', err);
+    loginUser('Arthur Montgomery');
+    closeAuthModal();
+  }
+}
+
+function loginWithGoogle() {
+  const isKeyConfigured = GOOGLE_CLIENT_ID && !GOOGLE_CLIENT_ID.includes('SEU_CLIENT_ID');
+
+  // Se a biblioteca oficial do Google estiver carregada e uma chave real configurada:
+  if (typeof google !== 'undefined' && google.accounts && google.accounts.id && isKeyConfigured) {
+    try {
+      showToastNotice('Abrindo autenticação oficial com a Conta Google...');
+      google.accounts.id.prompt((notification) => {
+        if (notification.isNotDisplayed() || notification.isSkippedMoment()) {
+          // Fallback seguro caso o navegador bloqueie o OneTap automático
+          fallbackGoogleLogin();
+        }
+      });
+    } catch (err) {
+      console.warn('Google prompt indisponível:', err);
+      fallbackGoogleLogin();
+    }
+  } else {
+    fallbackGoogleLogin();
+  }
+}
+
+function fallbackGoogleLogin() {
+  showToastNotice('Conectando à Conta Google segura...');
+  setTimeout(() => {
+    loginUser('Arthur Montgomery');
+    showToastNotice('Autenticado com sucesso via Google! Bem-vindo ao Lounge Privé.');
+    closeAuthModal();
+  }, 450);
+}
+
 function forgotPasswordNotice(event) {
   if (event) event.preventDefault();
   showToastNotice('Instruções de redefinição enviadas para arthur.vip@aguiar.com e Concierge WhatsApp.');
@@ -594,8 +768,9 @@ function loginUser(userName) {
 
 function logoutUser() {
   localStorage.removeItem('sartoria-logged-user');
+  toggleProfileDrawer(false);
   updateLoggedUserState();
-  showToastNotice('Sessão encerrada com segurança.');
+  showToastNotice('Sessão encerrada com sucesso. Botões de acesso restaurados.');
 }
 
 // 8.1 MEMBER PROFILE & ORDERS FLYOUT DRAWER CONTROLLER
@@ -838,7 +1013,33 @@ function logoutUserFromDrawer() {
 
 function updateLoggedUserState() {
   const user = localStorage.getItem('sartoria-logged-user');
+
+  // 1. Top bar buttons (Sign In, Sign Up, Sair da Conta, Meu Lounge)
+  const btnSignIn = document.getElementById('topBtnSignIn');
+  const btnSignUp = document.getElementById('topBtnSignUp');
+  const btnLogout = document.getElementById('topBtnLogout');
+  const btnProfile = document.getElementById('topBtnProfile');
+
+  if (user) {
+    if (btnSignIn) btnSignIn.style.display = 'none';
+    if (btnSignUp) btnSignUp.style.display = 'none';
+    if (btnLogout) btnLogout.style.display = 'flex';
+    if (btnProfile) btnProfile.style.display = 'flex';
+  } else {
+    if (btnSignIn) btnSignIn.style.display = 'flex';
+    if (btnSignUp) btnSignUp.style.display = 'flex';
+    if (btnLogout) btnLogout.style.display = 'none';
+    if (btnProfile) btnProfile.style.display = 'none';
+  }
+
+  // 2. Header lounge button & header logout button
   const loungeBtns = document.querySelectorAll('.btn-lounge-vip');
+  const headerLogoutBtn = document.getElementById('headerLogoutBtn');
+
+  if (headerLogoutBtn) {
+    headerLogoutBtn.style.display = user ? 'inline-flex' : 'none';
+  }
+
   loungeBtns.forEach(btn => {
     if (user) {
       const initials = user.split(' ').map(n => n[0]).join('').substring(0, 2).toUpperCase() || 'VIP';
@@ -857,6 +1058,26 @@ function updateLoggedUserState() {
       btn.onclick = () => openAuthModal('signin');
     }
   });
+
+  // 3. Club section CTA banner
+  const clubBannerCta = document.querySelector('.club-banner-cta');
+  if (clubBannerCta) {
+    if (user) {
+      clubBannerCta.innerHTML = `
+        <button class="btn-ink-primary" onclick="toggleProfileDrawer(true)">
+          Acessar Meu Lounge Privé →
+        </button>
+        <a class="link-small-login" onclick="logoutUser()" style="cursor:pointer;">Sair da conta (${user}) ↗</a>
+      `;
+    } else {
+      clubBannerCta.innerHTML = `
+        <button class="btn-ink-primary" onclick="openAuthModal('signup')">
+          Criar Conta Aguiar Privé →
+        </button>
+        <a class="link-small-login" onclick="openAuthModal('signin')">Já é membro? Fazer login ↗</a>
+      `;
+    }
+  }
 }
 
 function handleAuthSubmit(event, mode) {
@@ -1234,6 +1455,10 @@ document.addEventListener('DOMContentLoaded', () => {
   updateCartBadges();
   // Initialize authenticated user state if saved
   updateLoggedUserState();
+  // Initialize dynamic headline word rotator ("SHIRT" -> "PANTS" -> "BLAZER" -> "FIT")
+  initHeroWordRotator();
+  // Initialize Google Identity Services if available
+  initGoogleAuth();
 });
 
 // 12. THEME CONTROLLER (AUTOMATIC BROWSER DETECTION + MANUAL TOGGLE)
@@ -1268,19 +1493,19 @@ function applyTheme(theme) {
 
   if (theme === 'dark') {
     root.setAttribute('data-theme', 'dark');
-    if (label) label.innerText = 'Escuro';
+    if (label) label.innerText = 'Tema: Escuro';
     if (icon) icon.innerHTML = THEME_ICONS.moon;
     if (headerIcon) headerIcon.innerHTML = THEME_ICONS.moon;
   } else if (theme === 'light') {
     root.setAttribute('data-theme', 'light');
-    if (label) label.innerText = 'Claro';
+    if (label) label.innerText = 'Tema: Claro';
     if (icon) icon.innerHTML = THEME_ICONS.sun;
     if (headerIcon) headerIcon.innerHTML = THEME_ICONS.sun;
   } else {
     // Auto: follows browser prefers-color-scheme
     root.removeAttribute('data-theme');
     const isDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
-    if (label) label.innerText = isDark ? 'Auto (Escuro)' : 'Auto (Claro)';
+    if (label) label.innerText = isDark ? 'Tema: Auto Escuro' : 'Tema: Auto Claro';
     if (icon) icon.innerHTML = THEME_ICONS.auto;
     if (headerIcon) headerIcon.innerHTML = THEME_ICONS.auto;
   }
@@ -1299,7 +1524,7 @@ function toggleTheme() {
   }
   localStorage.setItem('sartoria-theme', next);
   applyTheme(next);
-  showToastNotice(`Tema alterado: ${next === 'dark' ? 'Modo Escuro Ativado' : next === 'light' ? 'Modo Claro Ativado' : 'Modo Automático (Sistema)'}`);
+  showToastNotice(`Tema alterado: ${next === 'dark' ? 'Modo Escuro Ativado' : next === 'light' ? 'Modo Claro Ativado' : 'Modo Automático Ativado'}`);
 }
 
 // 13. HERO SARTORIAL CAROUSEL CONTROLLER
@@ -1412,4 +1637,56 @@ function nextHeroSlide(event) {
 function prevHeroSlide(event) {
   if (event) event.stopPropagation();
   setHeroSlide((currentHeroSlide - 1 + totalHeroSlides) % totalHeroSlides);
+}
+
+// 14. HERO DYNAMIC HEADLINE WORD ROTATOR ("SHIRT" -> "PANTS" -> "BLAZER" -> "FIT")
+const HERO_ROTATING_WORDS = ['SHIRT', 'PANTS', 'BLAZER', 'FIT'];
+let heroWordCurrentIndex = 0;
+let heroWordInterval = null;
+
+function initHeroWordRotator() {
+  const wordEl = document.getElementById('heroRotatingWord');
+  const wrapEl = document.getElementById('heroRotatorWrap');
+  if (!wordEl || !wrapEl) return;
+
+  // The first word when entering the site is always SHIRT
+  heroWordCurrentIndex = 0;
+  wordEl.innerText = HERO_ROTATING_WORDS[0];
+
+  if (heroWordInterval) clearInterval(heroWordInterval);
+
+  // Rotate smoothly every 2.4s
+  heroWordInterval = setInterval(() => {
+    if (document.hidden) return;
+    advanceHeroRotatingWord();
+  }, 2400);
+}
+
+function advanceHeroRotatingWord() {
+  const wordEl = document.getElementById('heroRotatingWord');
+  const wrapEl = document.getElementById('heroRotatorWrap');
+  if (!wordEl || !wrapEl) return;
+
+  heroWordCurrentIndex = (heroWordCurrentIndex + 1) % HERO_ROTATING_WORDS.length;
+  const nextWord = HERO_ROTATING_WORDS[heroWordCurrentIndex];
+
+  // 1. Slide current word up and fade out
+  wordEl.classList.remove('slide-in-active', 'slide-down-prepare');
+  wordEl.classList.add('slide-up-out');
+
+  setTimeout(() => {
+    // 2. Change text while invisible
+    wordEl.innerText = nextWord;
+
+    // Position below the viewing boundary without transition
+    wordEl.classList.remove('slide-up-out');
+    wordEl.classList.add('slide-down-prepare');
+
+    // Force reflow
+    void wordEl.offsetWidth;
+
+    // 3. Slide in into place
+    wordEl.classList.remove('slide-down-prepare');
+    wordEl.classList.add('slide-in-active');
+  }, 320);
 }
